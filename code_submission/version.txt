@@ -1,0 +1,15 @@
+操作系统：Linux
+Python：3.6.4
+
+依赖包版本号：
+scipy:1.0.0
+numpy:1.14.0
+pandas:0.22.0
+seaborn:0.8.1
+sklearn:0.19.1
+lightgbm:2.1.0
+xgboost:0.7.post4
+matplotlib:2.1.2
+tqdm:4.22.0
+
+
