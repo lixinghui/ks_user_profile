@@ -20,31 +20,9 @@ def FE_numeric_data():
 
 	assert np.sum(all_data["vid"]!=(list(Y.index)+list(Y_pred.index)))==0
 
-	# 以下用group后用mean填充
 
-	columns=["0424","10004","1117","1321","1322","190","191","192","2403","2404","2405","316","320",
-		     "1814","1815","1840","1850","2372","31","32","33","34","38","39","37","312","313","315",
-		     "2406","1127","155","269003","269004","269005","269006","269008","269009","269010",
-		    "269012","269013","269014","269015","269016","269017","269018","269019","269020","269021",
-		    "269022","269023","269024","269025","1845"]
-
-	for col in tqdm(columns):
-		all_data[col]=all_data[col].astype(str)
-		temp=[]
-		for i in range(len(all_data)):
-		    pattern = re.compile(r'\d+\.{0,1}\d+')
-		    try:
-		        temp.append(pattern.findall(all_data[col][i])[0])
-		    except:
-		        temp.append(np.nan)
-		all_data[col]=temp
-		all_data[col]=all_data[col].astype("float32")
-		all_data[col]=all_data.groupby(["gender","age"])[col].transform(lambda x: x.fillna(x.mean()))
-
-
-	#以下feature直接用mean填充（group会放大异常值）
-
-	columns1=["0424","10004","1117","1321","1322",'459161', '809035', '459156', '319100', '0111', '809016',
+	
+	columns=["0424","10004","1117","1321","1322",'459161', '809035', '459156', '319100', '0111', '809016',
 		     "2410","2165","2421","2413","10013","2168","1842","2412","300028","300048","300113","709001",
 		     "100008","300044","0104","300067","300125","0107","300009","300014","809003",
 		     '459155', '0105', '459158', '0106', '300006', '311', '3184', '35', '300129', '0109', '310', 
@@ -62,18 +40,21 @@ def FE_numeric_data():
 		    "2390","2407","2986","300035","30006","300078","321","809002","809007","809020","809024","809029",
 		    "809031","809032","809033","809034","979010","979025","979026","979027","A701","A703",
 		    ]+[str(i) for i in range(979013,979024,1)]+[str(i) for i in range(809037,809062,1)]
-	for col in tqdm(set(columns1)-set(columns)):
-		all_data[col]=all_data[col].astype(str)
-		temp=[]
-		for i in range(len(all_data)):
-		    pattern = re.compile(r'\d+\.{0,1}\d+')
-		    try:
-		        temp.append(pattern.findall(all_data[col][i])[0])
-		    except:
-		        temp.append(np.nan)
-		all_data[col]=temp
-		all_data[col]=all_data[col].astype("float32")
-		all_data[col]=all_data[col].fillna(all_data[col].mean())
+	for col in tqdm(columns):
+		if all_data[col].dtype!="object":
+			pass
+		else:
+			all_data[col]=all_data[col].astype(str)
+			temp=[]
+			for i in range(len(all_data)):
+				pattern = re.compile(r'\d+\.{0,1}\d+')
+				try:
+				    temp.append(pattern.findall(all_data[col][i])[0])
+				except:
+				    temp.append(np.nan)
+			all_data[col]=temp
+			all_data[col]=all_data[col].astype("float32")
+		
 
 
 	# 以下数据阴性用0填充，缺失值用mean填充
@@ -104,12 +85,7 @@ def FE_numeric_data():
 		            temp.append(np.nan)
 		all_data[col]=temp
 		all_data[col]=all_data[col].astype("float32")
-		all_data[col]=all_data[col].fillna(all_data[col].mean())
-
-
-	# 针对feature_importance高但缺失值非常多的数据，我们着重处理（用相关性最高的数据group后填充缺失值）   
-
-
+		
 	columns=["193","10002","0425","319","2372","314","100007","2174","1115","2333","317","10003",
 		     "100006","183","100005","269011","2420","1345"]
 	for col in tqdm(columns):
@@ -125,58 +101,6 @@ def FE_numeric_data():
 		all_data[col]=all_data[col].astype("float32")
 
 
-	all_data["193"]=all_data.groupby(all_data["192"]>all_data["192"].mean()
-		                            )["193"].transform(lambda x: x.fillna(x.mean()))
-
-	all_data["10002"]=all_data.groupby(all_data["192"]>all_data["192"].mean()
-		                            )["10002"].transform(lambda x: x.fillna(x.mean()))
-
-	all_data["0425"]=all_data.groupby(all_data["0424"]>all_data["0424"].mean()
-		                            )["0425"].transform(lambda x: x.fillna(x.mean()))
-
-	all_data["319"]=all_data.groupby(all_data["312"]>all_data["312"].mean()
-		                            )["319"].transform(lambda x: x.fillna(x.mean()))
-
-
-	all_data["2372"]=all_data["2372"].fillna(all_data["2372"].mean())  ###没有相关性较好的数据，直接用平均值填充
-
-	all_data["314"]=all_data.groupby(all_data["37"]>all_data["37"].mean()
-		                            )["314"].transform(lambda x: x.fillna(x.mean()))
-	all_data["100007"]=all_data["100007"].fillna(all_data["100007"].mean())
-
-	all_data["2174"]=all_data.groupby(all_data["1845"]>all_data["1845"].mean()
-		                            )["2174"].transform(lambda x: x.fillna(x.mean()))
-
-	all_data["1115"]=all_data.groupby(all_data["1117"]>all_data["1117"].median()
-		                            )["1115"].transform(lambda x: x.fillna(x.mean()))
-
-	all_data["2333"]=all_data["2333"].fillna(all_data["2333"].mean())  ###没有相关性较好的数据，直接用平均值填充
-
-	all_data["317"]=all_data.groupby(all_data["316"]>all_data["316"].mean()
-		                            )["317"].transform(lambda x: x.fillna(x.mean()))
-
-	all_data["10003"]=all_data.groupby(all_data["183"]>all_data["183"].mean()
-		                            )["10003"].transform(lambda x: x.fillna(x.mean()))
-
-	all_data["100006"]=all_data["100006"].fillna(all_data["100006"].mean())  ###没有相关性较好的数据，直接用平均值填充
-
-	all_data["100005"]=all_data.groupby(all_data["320"]>all_data["320"].mean()
-		                            )["100005"].transform(lambda x: x.fillna(x.mean()))
-
-	all_data["183"]=all_data.groupby(all_data["10003"]>all_data["10003"].mean()
-		                            )["183"].transform(lambda x: x.fillna(x.mean()))
-
-	all_data["269011"]=all_data.groupby(all_data["38"]>all_data["38"].mean()
-		                            )["269011"].transform(lambda x: x.fillna(x.mean()))
-
-	all_data["2420"]=all_data.groupby(all_data["0424"]>all_data["0424"].mean()
-		                            )["2420"].transform(lambda x: x.fillna(x.mean()))
-
-	all_data["1345"]=all_data.groupby(all_data["100012"]>all_data["100012"].mean()
-		                            )["1345"].transform(lambda x: x.fillna(x.mean()))
-
-
-
 	all_data=all_data.set_index("vid")
 	X_train=all_data[:-m_test]
 	X_test=all_data[-m_test:]
@@ -188,82 +112,85 @@ def FE_numeric_data():
 
 	# ##### 根据scatter图表剔除异常值，其实也可以用方差，均值方法，剔除异常值
 
-	df=df[df["0104"]<100]
-	df=df[df["100008"]<10]
-	df=df[df["709001"]<1]
-	df=df[df["2412"]<100]
-	df=df[df["1842"]<100]
-	df=df[df["10013"]<400]
-	df=df[df["1363"]<250]
-	df=df[df["2410"]<60]
-	df=df[df["A701"]<100]
-	df=df[df["809031"]<100]
-	df=df[df["300035"]<80]
-	df=df[df["2986"]<100]
-	df=df[df["2407"]<4000]
-	df=df[df["1331"]<4]
-	df=df[df["669008"]<100]
-	df=df[df["300076"]<100]
-	df=df[df["300074"]<20]
-	df=df[df["300070"]<15]
-	df=df[df["300068"]<50]
-	df=df[df["1873"]<40]
-	df=df[df["1844"]<4]
-	df=df[df["1110"]<50]
-	df=df[df["979014"]<2.0]
-	df=df[df["979002"]<1.5]
-	df=df[df["809025"]<15]
-	df=df[df["809009"]<15]
-	df=df[df["669021"]<100]
-	df=df[df["669006"]<60]
-	df=df[df["669004"]<40]
-	df=df[df["669002"]<15]
-	df=df[df["669001"]<40]
-	df=df[df["300017"]<20]
-	df=df[df["300012"]<20]
-	df=df[df["300008"]<4]
-	df=df[df["300001"]<60]
-	df=df[df["2376"]<800]
-	df=df[df["2177"]<200]
-	df=df[df["1474"]<300]
-	df=df[df["139"]<6]
-	df=df[df["1112"]<20]
-	df=df[df["10009"]<60]
-	df=df[df["100014"]<60]
-	df=df[df["100013"]<12]
-	df=df[df["269023"]<1.5]
-	df=df[df["269022"]<4]
-	df=df[df["269014"]<15]
-	df=df[df["269005"]<3]
-	df=df[df["155"]<40]
-	df=df[df["1345"]<400]
-	df=df[df["1127"]<3000]
-	df=df[df["34"]<2]
-	df=df[df["33"]<10]
-	df=df[df["317"]>220]
-	df=df[df["312"]<20]
-	df=df[df["2372"]<20]
-	df=df[df["2333"]<10]
-	df=df[df["10003"]<60]
-	df=df[df["10004"]<500]
-	df=df[df["1115"]<300]
-	df=df[df["10002"]<40]
-	df=df[df["1117"]<400]
-	df=df[df["1814"]<400]
-	df=df[df["1815"]<200]
-	df=df[(df["183"]>50)&(df["183"]<120)]
-	df=df[df["1850"]<40]
-	df=df[df["190"]<250]
-	df=df[df["192"]<100]
-	df=df[df["193"]<30]
-	df=df[df["2174"]>30]
-	df=df[(df["2403"]>20)&(df["2403"]<10000)]
-	df=df[df["2405"]>10]
-	df=df[df["300005"]<100]
-	df=df[df["3429"]<100]
-	df=df[df["3730"]<10]
-
-
+	#all_data.dtypes[all_data.dtypes !="object"].index
+	df=df.drop(df[df["0104"]>100].index)
+	df=df.drop(df[df["100008"]>10].index)
+	df=df.drop(df[df["709001"]>1].index)
+	df=df.drop(df[df["2412"]>100].index)
+	df=df.drop(df[df["1842"]>100].index)
+	df=df.drop(df[df["10013"]>400].index)
+	#df=df.drop(df[df["2411"]>1000].index)
+	df=df.drop(df[df["1363"]>250].index)
+	df=df.drop(df[df["2410"]>60].index)
+	df=df.drop(df[df["A701"]>100].index)
+	df=df.drop(df[df["809031"]>100].index)
+	df=df.drop(df[df["300035"]>80].index)
+	df=df.drop(df[df["2986"]>100].index)
+	df=df.drop(df[df["2407"]>4000].index)
+	df=df.drop(df[df["1331"]>4].index)
+	df=df.drop(df[df["669008"]>100].index)
+	df=df.drop(df[df["300076"]>100].index)
+	df=df.drop(df[df["300074"]>20].index)
+	df=df.drop(df[df["300070"]>15].index)
+	df=df.drop(df[df["300068"]>50].index)
+	df=df.drop(df[df["1873"]>40].index)
+	df=df.drop(df[df["1844"]>4].index)
+	df=df.drop(df[df["1110"]>50].index)
+	df=df.drop(df[df["979014"]>2.0].index)
+	df=df.drop(df[df["979002"]>1.5].index)
+	df=df.drop(df[df["809025"]>15].index)
+	df=df.drop(df[df["809009"]>15].index)
+	df=df.drop(df[df["669021"]>100].index)
+	df=df.drop(df[df["669006"]>60].index)
+	df=df.drop(df[df["669004"]>40].index)
+	df=df.drop(df[df["669002"]>15].index)
+	df=df.drop(df[df["669001"]>40].index)
+	df=df.drop(df[df["300017"]>20].index)
+	df=df.drop(df[df["300012"]>20].index)
+	df=df.drop(df[df["300008"]>4].index)
+	df=df.drop(df[df["300001"]>60].index)
+	df=df.drop(df[df["2376"]>800].index)
+	df=df.drop(df[df["2177"]>200].index)
+	df=df.drop(df[df["1474"]>300].index)
+	df=df.drop(df[df["139"]>6].index)
+	df=df.drop(df[df["1112"]>20].index)
+	df=df.drop(df[df["10009"]>60].index)
+	df=df.drop(df[df["100014"]>60].index)
+	df=df.drop(df[df["100013"]>12].index)
+	df=df.drop(df[df["269023"]>1.5].index)
+	df=df.drop(df[df["269022"]>4].index)
+	df=df.drop(df[df["269014"]>15].index)
+	df=df.drop(df[df["269005"]>3].index)
+	df=df.drop(df[df["155"]>40].index)
+	df=df.drop(df[df["1345"]>400].index)
+	df=df.drop(df[df["1127"]>3000].index)
+	df=df.drop(df[df["34"]>2].index)
+	df=df.drop(df[df["33"]>10].index)
+	df=df.drop(df[df["317"]<220].index)
+	df=df.drop(df[df["312"]>20].index)
+	df=df.drop(df[df["2372"]>20].index)
+	df=df.drop(df[df["2333"]>10].index)
+	df=df.drop(df[df["10003"]>60].index)
+	df=df.drop(df[df["10004"]>500].index)
+	df=df.drop(df[df["1115"]>300].index)
+	df=df.drop(df[df["10002"]>40].index)
+	df=df.drop(df[df["1117"]>400].index)
+	df=df.drop(df[df["1814"]>400].index)
+	df=df.drop(df[df["1815"]>200].index)
+	df=df.drop(df[(df["183"]<50) | (df["183"]>120)].index)
+	df=df.drop(df[df["1850"]>40].index)
+	df=df.drop(df[df["190"]>250].index)
+	df=df.drop(df[df["192"]>100].index)
+	df=df.drop(df[df["193"]>30].index)
+	df=df.drop(df[df["2174"]<30].index)
+	df=df.drop(df[(df["2403"]<20) | (df["2403"]>10000)].index)
+	df=df.drop(df[df["2405"]<10].index)
+	df=df.drop(df[df["300005"]>100].index)
+	df=df.drop(df[df["3429"]>100].index)
+	df=df.drop(df[df["3730"]>10].index)
+	
+	print("The number after filter outlier is {}".format(df.shape))
+	
 	X_train=df.iloc[:,:-5]
 	Y_train=df.iloc[:,-5:]
 
