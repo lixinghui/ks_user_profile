@@ -8,7 +8,7 @@ from scipy.stats import skew,norm
 from tqdm import tqdm  
 import re
 
-def Predict_first():
+def Predict_first(model_name="xgb",predict=False):
 
 	all_data=pd.read_csv("../data/all_data_all_done.csv",low_memory=False)
 	all_data=all_data.set_index("vid")
@@ -92,7 +92,10 @@ def Predict_first():
 		                          feature_fraction_seed=9, bagging_seed=9,n_jobs=4,
 		                          min_data_in_leaf =16, min_sum_hessian_in_leaf = 11)
 	
-
+	if model_name=="lgb":
+		for i in range(1):
+			scores=rmse_cv(reg_lgb,i)
+			print("lgb scores {:.5f}(with std: {:.5f})".format(scores.mean(),scores.std()))
 
 
 	reg_xgb = xgb.XGBRegressor(colsample_bytree=0.7184, 
@@ -101,9 +104,10 @@ def Predict_first():
 		                         min_child_weight=16.154, reg_alpha=0.2695,
 		                         subsample=0.8171, silent=1,reg_lambda=0.1855,
 		                         )
-	for i in range(1):
-		scores=rmse_cv(reg_xgb,i)
-		print("xgb scores {:.5f}(with std: {:.5f})".format(scores.mean(),scores.std()))
+	if model_name=="xgb":
+		for i in range(1):
+			scores=rmse_cv(reg_xgb,i)
+			print("xgb scores {:.5f}(with std: {:.5f})".format(scores.mean(),scores.std()))
 
 
 	reg_et=ExtraTreesRegressor(n_estimators=354,max_features=0.3,          
@@ -159,13 +163,13 @@ def Predict_first():
 
 
 	####进行预测
-#	stacked_averaged_models.fit(X_train.values,Y_train.values[:,0])
-#	y1_stacked=stacked_averaged_models.predict(X_test.values)
-
-
-#	##保存文件
-#	df_sub=pd.read_csv('../data/meinian_round1_test_b_20180505.csv',
-#		                   engine='python',encoding="gbk")
-#	df_sub["收缩压"]=np.exp(y1_stacked)-1
-#	df_sub.to_csv('../data/1_stacked_xgb.csv',index=False)
+	if predict:
+		stacked_averaged_models.fit(X_train.values,Y_train.values[:,0])
+		y1_stacked=stacked_averaged_models.predict(X_test.values)
+		
+		##保存文件
+		df_sub=pd.read_csv('../data/meinian_round1_test_b_20180505.csv',
+				               engine='python',encoding="gbk")
+		df_sub["收缩压"]=np.exp(y1_stacked)-1
+		df_sub.to_csv('../data/1_stacked_xgb.csv',index=False)
 

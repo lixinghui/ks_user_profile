@@ -1,5 +1,3 @@
-
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -29,9 +27,15 @@ def Extract_mannul_features():
 
 	to_drop=all_data.isnull().sum().sort_values(ascending=False)/len(all_data)*100
 	to_drop=to_drop[to_drop>97.0]
-	all_data.drop(to_drop.index,axis=1,inplace=True)
-
-
+	to_drop_list=[]
+	for col in to_drop.index:
+		if all_data[col].dtype=="object":
+			to_drop_list.append(col)
+		elif all_data[col].notnull().sum()<200:
+			to_drop_list.append(col)
+	all_data.drop(to_drop_list,axis=1,inplace=True)
+	
+	print("After drop features with high na rate,the shape of all data is {}".format(all_data.shape))
 	# ### 根据其他项信息提取性别Feature
 
 	gender=[]

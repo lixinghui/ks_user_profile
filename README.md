@@ -7,7 +7,9 @@ Label encoder the positive and negetive items
 Extract the 0101 and 0102 feature to get the ultrasonic data of organs(only work for Systolic) 
 
 
+2018-5-9:
 ignore most nan value 
 only predict the feature with high importance and high rate na
 
-
+208-5-10:
+add more numeric feature 

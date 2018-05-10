@@ -674,7 +674,7 @@ def FE_text_data():
 		                          min_data_in_leaf =16, min_sum_hessian_in_leaf = 11)
 		                          
 	columns=["193","10002","0425","319","2372","314","100007","2174","1115","2333","317","10003",
-		     "100006","183","100005","269011","2420","1345"]
+		     "100006","183","100005","269011","2420","1345"] #feature importance top20
 	
 	print("filling nan value....")	     
 	all_data_temp=pd.get_dummies(all_data)
@@ -686,7 +686,7 @@ def FE_text_data():
 		assert np.sum(X_train_temp.index!=Y_train_temp.index)==0
 		X_test_temp=all_data_temp[all_data_temp[col].isnull()].drop(col,axis=1)
 
-		if all_data.corr()[col].sort_values(ascending=False)[1]>0.3:    #### 训练集过小过拟合会很严重，直接用mean填充那些特征
+		if all_data.corr()[col].sort_values(ascending=False)[1]>0.3 and len(X_train_temp)>4000:    
 		    
 		    reg_lgb.fit(X_train_temp,Y_train_temp)
 		    y_pred=reg_lgb.predict(X_test_temp)               
@@ -698,8 +698,7 @@ def FE_text_data():
 		    predicted_feature=pd.DataFrame(df_temp[col],index=df_temp.index)
 
 		    all_data=pd.concat([all_data.drop(col,axis=1),predicted_feature],axis=1,join="inner")
-		else:
-		    all_data[col]=all_data[col].fillna(all_data[col].median())#####没有很好的相关的特征时，直接用median填充
+		
 
 	# ## box cox sknewed data
 

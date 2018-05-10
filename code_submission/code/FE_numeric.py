@@ -111,8 +111,13 @@ def FE_numeric_data():
 
 
 	# ##### 根据scatter图表剔除异常值，其实也可以用方差，均值方法，剔除异常值
+	numeric_features=all_data.dtypes[all_data.dtypes !="object"].index
+	for col in numeric_features:
+		lower_limit=df[col].mean()-10*df[col].std()
+		upper_limit=df[col].mean()+10*df[col].std()
+		df=df.drop(df[(df[col]<lower_limit)|(df[col]>upper_limit)].index,axis=0)
+		
 
-	#all_data.dtypes[all_data.dtypes !="object"].index
 	df=df.drop(df[df["0104"]>100].index)
 	df=df.drop(df[df["100008"]>10].index)
 	df=df.drop(df[df["709001"]>1].index)
@@ -200,7 +205,4 @@ def FE_numeric_data():
 	
 	print(num_train,num_test,Y_train.shape)
 	Y_train.to_csv("../data/Y_train_outlier_done.csv")
-
 	all_data.to_csv("../data/all_data_outlier_done.csv")
-
-

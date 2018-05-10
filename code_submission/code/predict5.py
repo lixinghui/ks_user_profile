@@ -7,7 +7,7 @@ from scipy.stats import skew,norm
 from tqdm import tqdm  
 import re
 
-def Predict_fifth():
+def Predict_fifth(model_name="xgb",predict=False):
 
 	all_data=pd.read_csv("../data/all_data_all_done.csv",low_memory=False)
 	all_data=all_data.set_index("vid")
@@ -16,8 +16,7 @@ def Predict_fifth():
 	m_test=Y_pred.shape[0]
 
 
-	all_data.drop(["num_items","0973","0974","0929","1316","3730","0423"],axis=1,inplace=True)  ###0101检查项目0102中都有，因此drop
-
+	all_data.drop(["num_items","动脉","心室","动脉瓣"],axis=1,inplace=True)  
 	# ### getdummy之后生成最终数据
 
 
@@ -85,7 +84,11 @@ def Predict_fifth():
 		                          feature_fraction_seed=9, bagging_seed=9,n_jobs=4,
 		                          min_data_in_leaf =16, min_sum_hessian_in_leaf = 11)
 
-
+	if model_name=="lgb":
+		for i in range(4,5):
+			scores=rmse_cv(reg_lgb,i)
+			print("lgb scores {:.5f}(with std: {:.5f})".format(scores.mean(),scores.std()))
+			
 	reg_GDBT = GradientBoostingRegressor(n_estimators=1174, learning_rate=0.015,
 		                               max_depth=9, max_features='sqrt',
 		                               min_samples_leaf=46, min_samples_split=8,
@@ -98,9 +101,10 @@ def Predict_fifth():
 		                         subsample=0.8171, silent=1,reg_lambda=0.1855,
 		                         )
 
-	for i in range(4,5):
-		scores=rmse_cv(reg_xgb,i)
-		print("xgb scores {:.5f}(with std: {:.5f})".format(scores.mean(),scores.std()))
+	if model_name=="xgb":
+		for i in range(4,5):
+			scores=rmse_cv(reg_xgb,i)
+			print("xgb scores {:.5f}(with std: {:.5f})".format(scores.mean(),scores.std()))
 
 
 	reg_et=ExtraTreesRegressor(n_estimators=354,max_features=0.3,          
@@ -153,12 +157,13 @@ def Predict_fifth():
 
 	stacked_averaged_models = StackingAveragedModels(base_models = (reg_lgb,reg_GDBT,reg_lasso,reg_ENet,reg_et,reg_xgb),
 		                                             meta_model = reg_lasso_stack )
+	if predict:
+	
+		stacked_averaged_models.fit(X_train.values,Y_train.values[:,4])
+		y5_stacked=stacked_averaged_models.predict(X_test.values)
 
-#	stacked_averaged_models.fit(X_train.values,Y_train.values[:,4])
-#	y5_stacked=stacked_averaged_models.predict(X_test.values)
-
-#	df_sub=pd.read_csv('../data/meinian_round1_test_b_20180505.csv',
-#		                   engine='python',encoding="gbk")
-#	df_sub["血清低密度脂蛋白"]=np.exp(y5_stacked)-1
-#	df_sub.to_csv('../data/5_stacked_xgb.csv',index=False)
+		df_sub=pd.read_csv('../data/meinian_round1_test_b_20180505.csv',
+				               engine='python',encoding="gbk")
+		df_sub["血清低密度脂蛋白"]=np.exp(y5_stacked)-1
+		df_sub.to_csv('../data/5_stacked_xgb.csv',index=False)
 

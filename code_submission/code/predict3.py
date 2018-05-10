@@ -6,7 +6,7 @@ from scipy.stats import skew,norm
 from tqdm import tqdm  
 import re
 
-def Predict_third():
+def Predict_third(model_name="xgb",predict=False):
 
 	all_data=pd.read_csv("../data/all_data_all_done.csv",low_memory=False)
 	all_data=all_data.set_index("vid")
@@ -15,7 +15,10 @@ def Predict_third():
 	Y_pred=Y_pred.set_index("vid")
 	m_test=Y_pred.shape[0]
 
-	all_data.drop(["num_items"],axis=1,inplace=True)  
+	all_data.drop(["num_items","动脉","心室","动脉瓣"],axis=1,inplace=True)  
+	df_temp=all_data.isnull().sum()/len(all_data)
+	to_drop=df_temp[df_temp>0.97].index
+	all_data.drop(to_drop,axis=1,inplace=True)  
 
 	all_data=pd.get_dummies(all_data,drop_first=True)
 
@@ -86,7 +89,10 @@ def Predict_third():
 		                          bagging_freq = 5, feature_fraction = 0.2319,
 		                          feature_fraction_seed=9, bagging_seed=9,n_jobs=4,
 		                          min_data_in_leaf =16, min_sum_hessian_in_leaf = 11)
-
+	if model_name=="lgb":
+		for i in range(2,3):
+			scores=rmse_cv(reg_lgb,i)
+			print("lgb scores {:.5f}(with std: {:.5f})".format(scores.mean(),scores.std()))
 
 
 	reg_GDBT = GradientBoostingRegressor(n_estimators=1174, learning_rate=0.015,
@@ -102,9 +108,10 @@ def Predict_third():
 		                         subsample=0.8171, silent=1,reg_lambda=0.1855,
 		                         )
 		                         
-	for i in range(2,3):
-		scores=rmse_cv(reg_xgb,i)
-		print("xgb scores {:.5f}(with std: {:.5f})".format(scores.mean(),scores.std()))
+	if model_name=="xgb":
+		for i in range(2,3):
+			scores=rmse_cv(reg_xgb,i)
+			print("xgb scores {:.5f}(with std: {:.5f})".format(scores.mean(),scores.std()))
 
 
 	reg_et=ExtraTreesRegressor(n_estimators=354,max_features=0.3,          
@@ -160,13 +167,13 @@ def Predict_third():
 		                                             meta_model = reg_lasso_stack )
 
 
+	if predict:
+		stacked_averaged_models.fit(X_train.values,Y_train.values[:,2])
+		y3_stacked=stacked_averaged_models.predict(X_test.values)
 
-#	stacked_averaged_models.fit(X_train.values,Y_train.values[:,2])
-#	y3_stacked=stacked_averaged_models.predict(X_test.values)
 
-
-#	df_sub=pd.read_csv('../data/meinian_round1_test_b_20180505.csv',
-#		                   engine='python',encoding="gbk")
-#	df_sub["血清甘油三酯"]=np.exp(y3_stacked)-1
-#	df_sub.to_csv('../data/3_stacked_xgb.csv',index=False)
+		df_sub=pd.read_csv('../data/meinian_round1_test_b_20180505.csv',
+				               engine='python',encoding="gbk")
+		df_sub["血清甘油三酯"]=np.exp(y3_stacked)-1
+		df_sub.to_csv('../data/3_stacked_xgb.csv',index=False)
 

@@ -7,7 +7,7 @@ from scipy.stats import skew,norm
 from tqdm import tqdm  
 import re
 
-def Predict_second():
+def Predict_second(model_name="xgb",predict=False):
 
 	# ### 处理离散型数据
 
@@ -23,7 +23,7 @@ def Predict_second():
 
 
 
-	all_data.drop(["num_items","0423","0974"],axis=1,inplace=True)  ###0101检查项目0102中都有，因此drop
+	all_data.drop(["num_items","0423","0974","动脉","心室","动脉瓣"],axis=1,inplace=True)  ###0101检查项目0102中都有，因此drop
 
 	# ### getdummy之后生成最终数据
 
@@ -102,7 +102,10 @@ def Predict_second():
 		                          feature_fraction_seed=9, bagging_seed=9,n_jobs=4,
 		                          min_data_in_leaf =16, min_sum_hessian_in_leaf = 11)
 
-
+	if model_name=="lgb":
+		for i in range(1,2):
+			scores=rmse_cv(reg_lgb,i)
+			print("lgb scores {:.5f}(with std: {:.5f})".format(scores.mean(),scores.std()))
 		
 	reg_xgb = xgb.XGBRegressor(colsample_bytree=0.7184, 
 		                       gamma=0.1253,n_estimators=740,n_jobs=4,
@@ -110,10 +113,11 @@ def Predict_second():
 		                         min_child_weight=16.154, reg_alpha=0.2695,
 		                         subsample=0.8171, silent=1,reg_lambda=0.1855,
 		                         )
-	for i in range(1,2):
-		scores=rmse_cv(reg_xgb,i)
-		print("Xgb scores {:.5f}(with std: {:.5f})".format(scores.mean(),scores.std()))
-		
+	if model_name=="xgb":
+		for i in range(1,2):
+			scores=rmse_cv(reg_xgb,i)
+			print("xgb scores {:.5f}(with std: {:.5f})".format(scores.mean(),scores.std()))
+			
 	reg_et=ExtraTreesRegressor(n_estimators=354,max_features=0.3,          
 		                       max_depth=68,n_jobs=-1,min_samples_split=2,
 		                         min_samples_leaf=6,random_state=42)
@@ -165,17 +169,14 @@ def Predict_second():
 		                                             meta_model = reg_lasso_stack )
 
 
+	if predict:
+	
+		stacked_averaged_models.fit(X_train.values,Y_train.values[:,1])
+		y2_stacked=stacked_averaged_models.predict(X_test.values)
 
-#	stacked_averaged_models.fit(X_train.values,Y_train.values[:,1])
-#	y2_stacked=stacked_averaged_models.predict(X_test.values)
+		df_sub=pd.read_csv('../data/meinian_round1_test_b_20180505.csv',
+				               engine='python',encoding="gbk")
 
-
-
-
-
-#	df_sub=pd.read_csv('../data/meinian_round1_test_b_20180505.csv',
-#		                   engine='python',encoding="gbk")
-
-#	df_sub["舒张压"]=np.exp(y2_stacked)-1
-#	df_sub.to_csv('../data/2_stacked_xgb.csv',index=False)
+		df_sub["舒张压"]=np.exp(y2_stacked)-1
+		df_sub.to_csv('../data/2_stacked_xgb.csv',index=False)
 
