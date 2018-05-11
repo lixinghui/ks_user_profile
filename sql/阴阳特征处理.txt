@@ -1,0 +1,246 @@
+ CREATE TABLE train_pos AS 
+ SELECT vid,
+ max(CASE 
+ WHEN test_id='100010' and REGEXP_SUBSTR(results, '\\+{4,4}') is not null THEN 4
+ WHEN test_id='100010' and REGEXP_SUBSTR(results, '\\+{3,3}') is not null THEN 3
+ WHEN test_id='100010' and REGEXP_SUBSTR(results, '\\+{2,2}') is not null THEN 2
+ WHEN test_id='100010' and REGEXP_SUBSTR(results, '\\+\\-') is not null THEN 0.5
+ WHEN test_id='100010' and REGEXP_SUBSTR(results, '\\+') is not null THEN 1
+ WHEN test_id='100010' and REGEXP_SUBSTR(results, '阳性') is not null THEN 1
+ WHEN test_id='100010' and REGEXP_SUBSTR(results, '阴性') is not null THEN 0
+ WHEN test_id='100010' and REGEXP_SUBSTR(results, '\\-') is not null THEN 0
+ ELSE NULL
+ END ) as 100010_检查,
+ max(CASE 
+ WHEN test_id='3190' and REGEXP_SUBSTR(results, '\\+{4,4}') is not null THEN 4
+ WHEN test_id='3190' and REGEXP_SUBSTR(results, '\\+{3,3}') is not null THEN 3
+ WHEN test_id='3190' and REGEXP_SUBSTR(results, '\\+{2,2}') is not null THEN 2
+ WHEN test_id='3190' and REGEXP_SUBSTR(results, '\\+\\-') is not null THEN 0.5
+ WHEN test_id='3190' and REGEXP_SUBSTR(results, '\\+') is not null THEN 1
+ WHEN test_id='3190' and REGEXP_SUBSTR(results, '阳性') is not null THEN 1
+ WHEN test_id='3190' and REGEXP_SUBSTR(results, '阴性') is not null THEN 0
+ WHEN test_id='3190' and REGEXP_SUBSTR(results, '\\-') is not null THEN 0
+ ELSE NULL
+ END ) as 3190_检查,
+ max(CASE 
+ WHEN test_id='3191' and REGEXP_SUBSTR(results, '\\+{4,4}') is not null THEN 4
+ WHEN test_id='3191' and REGEXP_SUBSTR(results, '\\+{3,3}') is not null THEN 3
+ WHEN test_id='3191' and REGEXP_SUBSTR(results, '\\+{2,2}') is not null THEN 2
+ WHEN test_id='3191' and REGEXP_SUBSTR(results, '\\+\\-') is not null THEN 0.5
+ WHEN test_id='3191' and REGEXP_SUBSTR(results, '\\+') is not null THEN 1
+ WHEN test_id='3191' and REGEXP_SUBSTR(results, '阳性') is not null THEN 1
+ WHEN test_id='3191' and REGEXP_SUBSTR(results, '阴性') is not null THEN 0
+ WHEN test_id='3191' and REGEXP_SUBSTR(results, '\\-') is not null THEN 0
+ ELSE NULL
+ END ) as 3191_检查,
+ max(CASE 
+ WHEN test_id='3192' and REGEXP_SUBSTR(results, '\\+{4,4}') is not null THEN 4
+ WHEN test_id='3192' and REGEXP_SUBSTR(results, '\\+{3,3}') is not null THEN 3
+ WHEN test_id='3192' and REGEXP_SUBSTR(results, '\\+{2,2}') is not null THEN 2
+ WHEN test_id='3192' and REGEXP_SUBSTR(results, '\\+\\-') is not null THEN 0.5
+ WHEN test_id='3192' and REGEXP_SUBSTR(results, '\\+') is not null THEN 1
+ WHEN test_id='3192' and REGEXP_SUBSTR(results, '阳性') is not null THEN 1
+ WHEN test_id='3192' and REGEXP_SUBSTR(results, '阴性') is not null THEN 0
+ WHEN test_id='3192' and REGEXP_SUBSTR(results, '\\-') is not null THEN 0
+ ELSE NULL
+ END ) as 3192_检查,
+ max(CASE 
+ WHEN test_id='3195' and REGEXP_SUBSTR(results, '\\+{4,4}') is not null THEN 4
+ WHEN test_id='3195' and REGEXP_SUBSTR(results, '\\+{3,3}') is not null THEN 3
+ WHEN test_id='3195' and REGEXP_SUBSTR(results, '\\+{2,2}') is not null THEN 2
+ WHEN test_id='3195' and REGEXP_SUBSTR(results, '\\+\\-') is not null THEN 0.5
+ WHEN test_id='3195' and REGEXP_SUBSTR(results, '\\+') is not null THEN 1
+ WHEN test_id='3195' and REGEXP_SUBSTR(results, '阳性') is not null THEN 1
+ WHEN test_id='3195' and REGEXP_SUBSTR(results, '阴性') is not null THEN 0
+ WHEN test_id='3195' and REGEXP_SUBSTR(results, '\\-') is not null THEN 0
+ ELSE NULL
+ END ) as 3195_检查,
+ max(CASE 
+ WHEN test_id='3196' and REGEXP_SUBSTR(results, '\\+{4,4}') is not null THEN 4
+ WHEN test_id='3196' and REGEXP_SUBSTR(results, '\\+{3,3}') is not null THEN 3
+ WHEN test_id='3196' and REGEXP_SUBSTR(results, '\\+{2,2}') is not null THEN 2
+ WHEN test_id='3196' and REGEXP_SUBSTR(results, '\\+\\-') is not null THEN 0.5
+ WHEN test_id='3196' and REGEXP_SUBSTR(results, '\\+') is not null THEN 1
+ WHEN test_id='3196' and REGEXP_SUBSTR(results, '阳性') is not null THEN 1
+ WHEN test_id='3196' and REGEXP_SUBSTR(results, '阴性') is not null THEN 0
+ WHEN test_id='3196' and REGEXP_SUBSTR(results, '\\-') is not null THEN 0
+ ELSE NULL
+ END ) as 3196_检查,
+ max(CASE 
+ WHEN test_id='3197' and REGEXP_SUBSTR(results, '\\+{4,4}') is not null THEN 4
+ WHEN test_id='3197' and REGEXP_SUBSTR(results, '\\+{3,3}') is not null THEN 3
+ WHEN test_id='3197' and REGEXP_SUBSTR(results, '\\+{2,2}') is not null THEN 2
+ WHEN test_id='3197' and REGEXP_SUBSTR(results, '\\+\\-') is not null THEN 0.5
+ WHEN test_id='3197' and REGEXP_SUBSTR(results, '\\+') is not null THEN 1
+ WHEN test_id='3197' and REGEXP_SUBSTR(results, '阳性') is not null THEN 1
+ WHEN test_id='3197' and REGEXP_SUBSTR(results, '阴性') is not null THEN 0
+ WHEN test_id='3197' and REGEXP_SUBSTR(results, '\\-') is not null THEN 0
+ ELSE NULL
+ END ) as 3197_检查,
+ max(CASE 
+ WHEN test_id='3207' and REGEXP_SUBSTR(results, '\\+{4,4}') is not null THEN 4
+ WHEN test_id='3207' and REGEXP_SUBSTR(results, '\\+{3,3}') is not null THEN 3
+ WHEN test_id='3207' and REGEXP_SUBSTR(results, '\\+{2,2}') is not null THEN 2
+ WHEN test_id='3207' and REGEXP_SUBSTR(results, '\\+\\-') is not null THEN 0.5
+ WHEN test_id='3207' and REGEXP_SUBSTR(results, '\\+') is not null THEN 1
+ WHEN test_id='3207' and REGEXP_SUBSTR(results, '阳性') is not null THEN 1
+ WHEN test_id='3207' and REGEXP_SUBSTR(results, '阴性') is not null THEN 0
+ WHEN test_id='3207' and REGEXP_SUBSTR(results, '\\-') is not null THEN 0
+ ELSE NULL
+ END ) as 3207_检查,
+ max(CASE 
+ WHEN test_id='3430' and REGEXP_SUBSTR(results, '\\+{4,4}') is not null THEN 4
+ WHEN test_id='3430' and REGEXP_SUBSTR(results, '\\+{3,3}') is not null THEN 3
+ WHEN test_id='3430' and REGEXP_SUBSTR(results, '\\+{2,2}') is not null THEN 2
+ WHEN test_id='3430' and REGEXP_SUBSTR(results, '\\+\\-') is not null THEN 0.5
+ WHEN test_id='3430' and REGEXP_SUBSTR(results, '\\+') is not null THEN 1
+ WHEN test_id='3430' and REGEXP_SUBSTR(results, '阳性') is not null THEN 1
+ WHEN test_id='3430' and REGEXP_SUBSTR(results, '阴性') is not null THEN 0
+ WHEN test_id='3430' and REGEXP_SUBSTR(results, '\\-') is not null THEN 0
+ ELSE NULL
+ END ) as 3430_检查,
+ max(CASE 
+ WHEN test_id='2228' and REGEXP_SUBSTR(results, '\\+{4,4}') is not null THEN 4
+ WHEN test_id='2228' and REGEXP_SUBSTR(results, '\\+{3,3}') is not null THEN 3
+ WHEN test_id='2228' and REGEXP_SUBSTR(results, '\\+{2,2}') is not null THEN 2
+ WHEN test_id='2228' and REGEXP_SUBSTR(results, '\\+\\-') is not null THEN 0.5
+ WHEN test_id='2228' and REGEXP_SUBSTR(results, '\\+') is not null THEN 1
+ WHEN test_id='2228' and REGEXP_SUBSTR(results, '阳性') is not null THEN 1
+ WHEN test_id='2228' and REGEXP_SUBSTR(results, '阴性') is not null THEN 0
+ WHEN test_id='2228' and REGEXP_SUBSTR(results, '\\-') is not null THEN 0
+ ELSE NULL
+ END ) as 2228_检查,
+ max(CASE 
+ WHEN test_id='2229' and REGEXP_SUBSTR(results, '\\+{4,4}') is not null THEN 4
+ WHEN test_id='2229' and REGEXP_SUBSTR(results, '\\+{3,3}') is not null THEN 3
+ WHEN test_id='2229' and REGEXP_SUBSTR(results, '\\+{2,2}') is not null THEN 2
+ WHEN test_id='2229' and REGEXP_SUBSTR(results, '\\+\\-') is not null THEN 0.5
+ WHEN test_id='2229' and REGEXP_SUBSTR(results, '\\+') is not null THEN 1
+ WHEN test_id='2229' and REGEXP_SUBSTR(results, '阳性') is not null THEN 1
+ WHEN test_id='2229' and REGEXP_SUBSTR(results, '阴性') is not null THEN 0
+ WHEN test_id='2229' and REGEXP_SUBSTR(results, '\\-') is not null THEN 0
+ ELSE NULL
+ END ) as 2229_检查,
+ max(CASE 
+ WHEN test_id='2230' and REGEXP_SUBSTR(results, '\\+{4,4}') is not null THEN 4
+ WHEN test_id='2230' and REGEXP_SUBSTR(results, '\\+{3,3}') is not null THEN 3
+ WHEN test_id='2230' and REGEXP_SUBSTR(results, '\\+{2,2}') is not null THEN 2
+ WHEN test_id='2230' and REGEXP_SUBSTR(results, '\\+\\-') is not null THEN 0.5
+ WHEN test_id='2230' and REGEXP_SUBSTR(results, '\\+') is not null THEN 1
+ WHEN test_id='2230' and REGEXP_SUBSTR(results, '阳性') is not null THEN 1
+ WHEN test_id='2230' and REGEXP_SUBSTR(results, '阴性') is not null THEN 0
+ WHEN test_id='2230' and REGEXP_SUBSTR(results, '\\-') is not null THEN 0
+ ELSE NULL
+ END ) as 2230_检查,
+ max(CASE 
+ WHEN test_id='2233' and REGEXP_SUBSTR(results, '\\+{4,4}') is not null THEN 4
+ WHEN test_id='2233' and REGEXP_SUBSTR(results, '\\+{3,3}') is not null THEN 3
+ WHEN test_id='2233' and REGEXP_SUBSTR(results, '\\+{2,2}') is not null THEN 2
+ WHEN test_id='2233' and REGEXP_SUBSTR(results, '\\+\\-') is not null THEN 0.5
+ WHEN test_id='2233' and REGEXP_SUBSTR(results, '\\+') is not null THEN 1
+ WHEN test_id='2233' and REGEXP_SUBSTR(results, '阳性') is not null THEN 1
+ WHEN test_id='2233' and REGEXP_SUBSTR(results, '阴性') is not null THEN 0
+ WHEN test_id='2233' and REGEXP_SUBSTR(results, '\\-') is not null THEN 0
+ ELSE NULL
+ END ) as 2233_检查,
+ max(CASE 
+ WHEN test_id='2231' and REGEXP_SUBSTR(results, '\\+{4,4}') is not null THEN 4
+ WHEN test_id='2231' and REGEXP_SUBSTR(results, '\\+{3,3}') is not null THEN 3
+ WHEN test_id='2231' and REGEXP_SUBSTR(results, '\\+{2,2}') is not null THEN 2
+ WHEN test_id='2231' and REGEXP_SUBSTR(results, '\\+\\-') is not null THEN 0.5
+ WHEN test_id='2231' and REGEXP_SUBSTR(results, '\\+') is not null THEN 1
+ WHEN test_id='2231' and REGEXP_SUBSTR(results, '阳性') is not null THEN 1
+ WHEN test_id='2231' and REGEXP_SUBSTR(results, '阴性') is not null THEN 0
+ WHEN test_id='2231' and REGEXP_SUBSTR(results, '\\-') is not null THEN 0
+ ELSE NULL
+ END ) as 2231_检查,
+ max(CASE 
+ WHEN test_id='360' and REGEXP_SUBSTR(results, '\\+{4,4}') is not null THEN 4
+ WHEN test_id='360' and REGEXP_SUBSTR(results, '\\+{3,3}') is not null THEN 3
+ WHEN test_id='360' and REGEXP_SUBSTR(results, '\\+{2,2}') is not null THEN 2
+ WHEN test_id='360' and REGEXP_SUBSTR(results, '\\+\\-') is not null THEN 0.5
+ WHEN test_id='360' and REGEXP_SUBSTR(results, '\\+') is not null THEN 1
+ WHEN test_id='360' and REGEXP_SUBSTR(results, '阳性') is not null THEN 1
+ WHEN test_id='360' and REGEXP_SUBSTR(results, '阴性') is not null THEN 0
+ WHEN test_id='360' and REGEXP_SUBSTR(results, '\\-') is not null THEN 0
+ ELSE NULL
+ END ) as 360_检查,
+ max(CASE 
+ WHEN test_id='3301' and REGEXP_SUBSTR(results, '\\+{4,4}') is not null THEN 4
+ WHEN test_id='3301' and REGEXP_SUBSTR(results, '\\+{3,3}') is not null THEN 3
+ WHEN test_id='3301' and REGEXP_SUBSTR(results, '\\+{2,2}') is not null THEN 2
+ WHEN test_id='3301' and REGEXP_SUBSTR(results, '\\+\\-') is not null THEN 0.5
+ WHEN test_id='3301' and REGEXP_SUBSTR(results, '\\+') is not null THEN 1
+ WHEN test_id='3301' and REGEXP_SUBSTR(results, '阳性') is not null THEN 1
+ WHEN test_id='3301' and REGEXP_SUBSTR(results, '阴性') is not null THEN 0
+ WHEN test_id='3301' and REGEXP_SUBSTR(results, '\\-') is not null THEN 0
+ ELSE NULL
+ END ) as 3301_检查,
+ max(CASE 
+ WHEN test_id='3189' and REGEXP_SUBSTR(results, '\\+{4,4}') is not null THEN 4
+ WHEN test_id='3189' and REGEXP_SUBSTR(results, '\\+{3,3}') is not null THEN 3
+ WHEN test_id='3189' and REGEXP_SUBSTR(results, '\\+{2,2}') is not null THEN 2
+ WHEN test_id='3189' and REGEXP_SUBSTR(results, '\\+\\-') is not null THEN 0.5
+ WHEN test_id='3189' and REGEXP_SUBSTR(results, '\\+') is not null THEN 1
+ WHEN test_id='3189' and REGEXP_SUBSTR(results, '阳性') is not null THEN 1
+ WHEN test_id='3189' and REGEXP_SUBSTR(results, '阴性') is not null THEN 0
+ WHEN test_id='3189' and REGEXP_SUBSTR(results, '\\-') is not null THEN 0
+ ELSE NULL
+ END ) as 3189_检查,
+ max(CASE 
+ WHEN test_id='3194' and REGEXP_SUBSTR(results, '\\+{4,4}') is not null THEN 4
+ WHEN test_id='3194' and REGEXP_SUBSTR(results, '\\+{3,3}') is not null THEN 3
+ WHEN test_id='3194' and REGEXP_SUBSTR(results, '\\+{2,2}') is not null THEN 2
+ WHEN test_id='3194' and REGEXP_SUBSTR(results, '\\+\\-') is not null THEN 0.5
+ WHEN test_id='3194' and REGEXP_SUBSTR(results, '\\+') is not null THEN 1
+ WHEN test_id='3194' and REGEXP_SUBSTR(results, '阳性') is not null THEN 1
+ WHEN test_id='3194' and REGEXP_SUBSTR(results, '阴性') is not null THEN 0
+ WHEN test_id='3194' and REGEXP_SUBSTR(results, '\\-') is not null THEN 0
+ ELSE NULL
+ END ) as 3194_检查,
+ max(CASE 
+ WHEN test_id='3485' and REGEXP_SUBSTR(results, '\\+{4,4}') is not null THEN 4
+ WHEN test_id='3485' and REGEXP_SUBSTR(results, '\\+{3,3}') is not null THEN 3
+ WHEN test_id='3485' and REGEXP_SUBSTR(results, '\\+{2,2}') is not null THEN 2
+ WHEN test_id='3485' and REGEXP_SUBSTR(results, '\\+\\-') is not null THEN 0.5
+ WHEN test_id='3485' and REGEXP_SUBSTR(results, '\\+') is not null THEN 1
+ WHEN test_id='3485' and REGEXP_SUBSTR(results, '阳性') is not null THEN 1
+ WHEN test_id='3485' and REGEXP_SUBSTR(results, '阴性') is not null THEN 0
+ WHEN test_id='3485' and REGEXP_SUBSTR(results, '\\-') is not null THEN 0
+ ELSE NULL
+ END ) as 3485_检查,
+ max(CASE 
+ WHEN test_id='3486' and REGEXP_SUBSTR(results, '\\+{4,4}') is not null THEN 4
+ WHEN test_id='3486' and REGEXP_SUBSTR(results, '\\+{3,3}') is not null THEN 3
+ WHEN test_id='3486' and REGEXP_SUBSTR(results, '\\+{2,2}') is not null THEN 2
+ WHEN test_id='3486' and REGEXP_SUBSTR(results, '\\+\\-') is not null THEN 0.5
+ WHEN test_id='3486' and REGEXP_SUBSTR(results, '\\+') is not null THEN 1
+ WHEN test_id='3486' and REGEXP_SUBSTR(results, '阳性') is not null THEN 1
+ WHEN test_id='3486' and REGEXP_SUBSTR(results, '阴性') is not null THEN 0
+ WHEN test_id='3486' and REGEXP_SUBSTR(results, '\\-') is not null THEN 0
+ ELSE NULL
+ END ) as 3486_检查,
+ max(CASE 
+ WHEN test_id='2282' and REGEXP_SUBSTR(results, '\\+{4,4}') is not null THEN 4
+ WHEN test_id='2282' and REGEXP_SUBSTR(results, '\\+{3,3}') is not null THEN 3
+ WHEN test_id='2282' and REGEXP_SUBSTR(results, '\\+{2,2}') is not null THEN 2
+ WHEN test_id='2282' and REGEXP_SUBSTR(results, '\\+\\-') is not null THEN 0.5
+ WHEN test_id='2282' and REGEXP_SUBSTR(results, '\\+') is not null THEN 1
+ WHEN test_id='2282' and REGEXP_SUBSTR(results, '阳性') is not null THEN 1
+ WHEN test_id='2282' and REGEXP_SUBSTR(results, '阴性') is not null THEN 0
+ WHEN test_id='2282' and REGEXP_SUBSTR(results, '\\-') is not null THEN 0
+ ELSE NULL
+ END ) as 2282_检查,
+ max(CASE 
+ WHEN test_id='30002' and REGEXP_SUBSTR(results, '\\+{4,4}') is not null THEN 4
+ WHEN test_id='30002' and REGEXP_SUBSTR(results, '\\+{3,3}') is not null THEN 3
+ WHEN test_id='30002' and REGEXP_SUBSTR(results, '\\+{2,2}') is not null THEN 2
+ WHEN test_id='30002' and REGEXP_SUBSTR(results, '\\+\\-') is not null THEN 0.5
+ WHEN test_id='30002' and REGEXP_SUBSTR(results, '\\+') is not null THEN 1
+ WHEN test_id='30002' and REGEXP_SUBSTR(results, '阳性') is not null THEN 1
+ WHEN test_id='30002' and REGEXP_SUBSTR(results, '阴性') is not null THEN 0
+ WHEN test_id='30002' and REGEXP_SUBSTR(results, '\\-') is not null THEN 0
+ ELSE NULL
+ END ) as 30002_检查
+ FROM x_train 
+ GROUP by vid

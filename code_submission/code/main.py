@@ -48,10 +48,10 @@ def main():
 	print("Training && Predicting....")                           ####训练并预测数据
 	if start_nod >=4:
 				
-		#Predict_first(model_name=model_name,predict=predict)
+		Predict_first(model_name=model_name,predict=predict)
 		print("Systolic Prediction Done!")
 	
-		#Predict_second(model_name=model_name,predict=predict)
+		Predict_second(model_name=model_name,predict=predict)
 		print("Diastolic Prediction Done!")
 	
 		Predict_third(model_name=model_name,predict=predict)

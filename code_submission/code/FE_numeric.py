@@ -47,7 +47,7 @@ def FE_numeric_data():
 			all_data[col]=all_data[col].astype(str)
 			temp=[]
 			for i in range(len(all_data)):
-				pattern = re.compile(r'\d+\.{0,1}\d+')
+				pattern = re.compile(r'\d+\.{0,1}\d*')
 				try:
 				    temp.append(pattern.findall(all_data[col][i])[0])
 				except:
@@ -75,10 +75,10 @@ def FE_numeric_data():
 		            temp.append(1)
 		        else:
 		            temp.append(40)
-		    elif "-" in j or "阴性" in j:
+		    elif "-" in j or "阴性" in j or '未见' in j:
 		        temp.append(0)
 		    else:
-		        pattern = re.compile(r'\d+\.{0,1}\d+')
+		        pattern = re.compile(r'\d+\.{0,1}\d*')
 		        try:
 		            temp.append(pattern.findall(j)[0])
 		        except:
@@ -92,7 +92,7 @@ def FE_numeric_data():
 		all_data[col]=all_data[col].astype(str)
 		temp=[]
 		for i in range(len(all_data)):
-		    pattern = re.compile(r'\d+\.{0,1}\d+')
+		    pattern = re.compile(r'\d+\.{0,1}\d*')
 		    try:
 		        temp.append(pattern.findall(all_data[col][i])[0])
 		    except:

@@ -25,7 +25,7 @@ def Preprocessing():
 	for col in columns:
 		temp=[]
 		for i in range(m_train):
-		    pattern = re.compile(r'\d+\.{0,1}\d+')   ##数值中间最多允许出现一个小数点
+		    pattern = re.compile(r'\d+\.{0,1}\d*')   ##数值中间最多允许出现一个小数点
 		    try:
 		        temp.append(pattern.findall(Y[col][i])[0])
 		    except:

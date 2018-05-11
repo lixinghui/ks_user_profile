@@ -1,0 +1,109 @@
+CREATE TABLE train_numeric_with_pos as
+ SELECT vid,
+ avg(CASE 
+ WHEN test_id='300005' and REGEXP_SUBSTR(results, '阳性') is not NULL then 40
+ WHEN test_id='300005' and REGEXP_SUBSTR(results, '\\+') is not NULL then 40
+ WHEN test_id='300005' and REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1,1) is not NULL THEN REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1)
+ WHEN test_id='300005' and results is not null then 0
+ ELSE null
+ END ) as 300005_检查,
+ avg(CASE 
+ WHEN test_id='3429' and REGEXP_SUBSTR(results, '阳性') is not NULL then 40
+ WHEN test_id='3429' and REGEXP_SUBSTR(results, '\\+') is not NULL then 40
+ WHEN test_id='3429' and REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1,1) is not NULL THEN REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1)
+ WHEN test_id='3429' and results is not null then 0
+ ELSE null
+ END ) as 3429_检查,
+ avg(CASE 
+ WHEN test_id='3193' and REGEXP_SUBSTR(results, '阳性') is not NULL then 40
+ WHEN test_id='3193' and REGEXP_SUBSTR(results, '\\+') is not NULL then 40
+ WHEN test_id='3193' and REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1,1) is not NULL THEN REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1)
+ WHEN test_id='3193' and results is not null then 0
+ ELSE null
+ END ) as 3193_检查,
+ avg(CASE 
+ WHEN test_id='3730' and REGEXP_SUBSTR(results, '阳性') is not NULL then 40
+ WHEN test_id='3730' and REGEXP_SUBSTR(results, '\\+') is not NULL then 40
+ WHEN test_id='3730' and REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1,1) is not NULL THEN REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1)
+ WHEN test_id='3730' and results is not null then 0
+ ELSE null
+ END ) as 3730_检查,
+ avg(CASE 
+ WHEN test_id='2177' and REGEXP_SUBSTR(results, '阳性') is not NULL then 40
+ WHEN test_id='2177' and REGEXP_SUBSTR(results, '\\+') is not NULL then 40
+ WHEN test_id='2177' and REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1,1) is not NULL THEN REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1)
+ WHEN test_id='2177' and results is not null then 0
+ ELSE null
+ END ) as 2177_检查,
+ avg(CASE 
+ WHEN test_id='2376' and REGEXP_SUBSTR(results, '阳性') is not NULL then 40
+ WHEN test_id='2376' and REGEXP_SUBSTR(results, '\\+') is not NULL then 40
+ WHEN test_id='2376' and REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1,1) is not NULL THEN REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1)
+ WHEN test_id='2376' and results is not null then 0
+ ELSE null
+ END ) as 2376_检查,
+ avg(CASE 
+ WHEN test_id='300017' and REGEXP_SUBSTR(results, '阳性') is not NULL then 40
+ WHEN test_id='300017' and REGEXP_SUBSTR(results, '\\+') is not NULL then 40
+ WHEN test_id='300017' and REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1,1) is not NULL THEN REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1)
+ WHEN test_id='300017' and results is not null then 0
+ ELSE null
+ END ) as 300017_检查,
+ avg(CASE 
+ WHEN test_id='300018' and REGEXP_SUBSTR(results, '阳性') is not NULL then 40
+ WHEN test_id='300018' and REGEXP_SUBSTR(results, '\\+') is not NULL then 40
+ WHEN test_id='300018' and REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1,1) is not NULL THEN REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1)
+ WHEN test_id='300018' and results is not null then 0
+ ELSE null
+ END ) as 300018_检查,
+ avg(CASE 
+ WHEN test_id='300019' and REGEXP_SUBSTR(results, '阳性') is not NULL then 40
+ WHEN test_id='300019' and REGEXP_SUBSTR(results, '\\+') is not NULL then 40
+ WHEN test_id='300019' and REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1,1) is not NULL THEN REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1)
+ WHEN test_id='300019' and results is not null then 0
+ ELSE null
+ END ) as 300019_检查,
+ avg(CASE 
+ WHEN test_id='979024' and REGEXP_SUBSTR(results, '阳性') is not NULL then 40
+ WHEN test_id='979024' and REGEXP_SUBSTR(results, '\\+') is not NULL then 40
+ WHEN test_id='979024' and REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1,1) is not NULL THEN REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1)
+ WHEN test_id='979024' and results is not null then 0
+ ELSE null
+ END ) as 979024_检查,
+ avg(CASE 
+ WHEN test_id='269026' and REGEXP_SUBSTR(results, '阳性') is not NULL then 40
+ WHEN test_id='269026' and REGEXP_SUBSTR(results, '\\+') is not NULL then 40
+ WHEN test_id='269026' and REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1,1) is not NULL THEN REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1)
+ WHEN test_id='269026' and results is not null then 0
+ ELSE null
+ END ) as 269026_检查,
+ avg(CASE 
+ WHEN test_id='669024' and REGEXP_SUBSTR(results, '阳性') is not NULL then 40
+ WHEN test_id='669024' and REGEXP_SUBSTR(results, '\\+') is not NULL then 40
+ WHEN test_id='669024' and REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1,1) is not NULL THEN REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1)
+ WHEN test_id='669024' and results is not null then 0
+ ELSE null
+ END ) as 669024_检查,
+ avg(CASE 
+ WHEN test_id='2371' and REGEXP_SUBSTR(results, '阳性') is not NULL then 40
+ WHEN test_id='2371' and REGEXP_SUBSTR(results, '\\+') is not NULL then 40
+ WHEN test_id='2371' and REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1,1) is not NULL THEN REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1)
+ WHEN test_id='2371' and results is not null then 0
+ ELSE null
+ END ) as 2371_检查,
+ avg(CASE 
+ WHEN test_id='300036' and REGEXP_SUBSTR(results, '阳性') is not NULL then 40
+ WHEN test_id='300036' and REGEXP_SUBSTR(results, '\\+') is not NULL then 40
+ WHEN test_id='300036' and REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1,1) is not NULL THEN REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1)
+ WHEN test_id='300036' and results is not null then 0
+ ELSE null
+ END ) as 300036_检查,
+ avg(CASE 
+ WHEN test_id='1363' and REGEXP_SUBSTR(results, '阳性') is not NULL then 40
+ WHEN test_id='1363' and REGEXP_SUBSTR(results, '\\+') is not NULL then 40
+ WHEN test_id='1363' and REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1,1) is not NULL THEN REGEXP_SUBSTR(results,'[[:digit:]]+\\.?[[:digit:]]*',1)
+ WHEN test_id='1363' and results is not null then 0
+ ELSE null
+ END ) as 1363_检查
+ FROM X_train
+ group BY vid
